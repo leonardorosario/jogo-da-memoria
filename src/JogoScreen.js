@@ -3,7 +3,6 @@ import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View 
 import { listarFiguras, inserirRecorde } from './db';
 import Carta from './Carta';
 
-// Embaralha um array (Fisher-Yates)
 function embaralhar(lista) {
   const copia = [...lista];
   for (let i = copia.length - 1; i > 0; i--) {
@@ -19,15 +18,14 @@ function formatarTempo(segundos) {
   return `${m}:${s}`;
 }
 
-// Pontuação: começa em 100, perde 5 por erro e 1 a cada 5 segundos
 function calcularPontuacao(erros, segundos) {
   return Math.max(0, 100 - erros * 5 - Math.floor(segundos / 5));
 }
 
 export default function JogoScreen() {
   const [cartas, setCartas] = useState([]);
-  const [abertas, setAbertas] = useState([]); // índices das cartas viradas na jogada atual
-  const [acertadas, setAcertadas] = useState([]); // ids das figuras já encontradas
+  const [abertas, setAbertas] = useState([]); 
+  const [acertadas, setAcertadas] = useState([]);
   const [erros, setErros] = useState(0);
   const [segundos, setSegundos] = useState(0);
   const [bloqueado, setBloqueado] = useState(false);
@@ -36,7 +34,6 @@ export default function JogoScreen() {
   const [jogador, setJogador] = useState('');
   const [recordeSalvo, setRecordeSalvo] = useState(false);
 
-  // Cronômetro
   useEffect(() => {
     if (!jogando || fim) return;
     const intervalo = setInterval(() => setSegundos((s) => s + 1), 1000);
@@ -49,7 +46,6 @@ export default function JogoScreen() {
       Alert.alert('Atenção', 'Cadastre pelo menos 6 figuras para jogar.');
       return;
     }
-    // sorteia 6 figuras, duplica e embaralha nas 12 posições
     const escolhidas = embaralhar(figuras).slice(0, 6);
     const pares = escolhidas.flatMap((f) => [
       { chave: `${f.id}-a`, figuraId: f.id, imagem: f.imagem },
@@ -77,13 +73,11 @@ export default function JogoScreen() {
 
     const [a, b] = novasAbertas;
     if (cartas[a].figuraId === cartas[b].figuraId) {
-      // acerto: o par fica visível
       const novasAcertadas = [...acertadas, carta.figuraId];
       setAcertadas(novasAcertadas);
       setAbertas([]);
       if (novasAcertadas.length === 6) setFim(true);
     } else {
-      // erro: conta e fecha as cartas depois de um tempo
       setErros((e) => e + 1);
       setBloqueado(true);
       setTimeout(() => {

@@ -18,7 +18,6 @@ export function iniciarBanco() {
   `);
 }
 
-// ---------- Figuras ----------
 export function listarFiguras() {
   return db.getAllSync('SELECT * FROM figuras ORDER BY id DESC');
 }
@@ -31,7 +30,6 @@ export function excluirFigura(id) {
   db.runSync('DELETE FROM figuras WHERE id = ?', id);
 }
 
-// ---------- Recordes ----------
 export function listarTop5() {
   return db.getAllSync('SELECT * FROM recordes ORDER BY pontuacao DESC, id ASC LIMIT 5');
 }

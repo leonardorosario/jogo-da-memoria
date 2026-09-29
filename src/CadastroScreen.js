@@ -22,7 +22,7 @@ export default function CadastroScreen() {
       allowsEditing: true,
       aspect: [1, 1],
       quality: 0.3,
-      base64: true, // guardamos a imagem no banco para não depender de arquivos temporários
+      base64: true,
     });
     if (!resultado.canceled) {
       const asset = resultado.assets[0];

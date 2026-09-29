@@ -1,11 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
 
-// Carta com animação de virar (rotação no eixo Y)
 export default function Carta({ imagem, aberta, acertada, onPress }) {
   const giro = useRef(new Animated.Value(0)).current;
   const { width } = useWindowDimensions();
-  // 3 cartas por linha: largura da tela - padding da tela (24) - margens das cartas (3 x 8)
   const tamanho = Math.floor((width - 24 - 24) / 3);
 
   useEffect(() => {
@@ -21,11 +19,9 @@ export default function Carta({ imagem, aberta, acertada, onPress }) {
 
   return (
     <TouchableOpacity style={[styles.container, { width: tamanho, height: tamanho }]} onPress={onPress} activeOpacity={0.8}>
-      {/* verso (carta fechada) */}
       <Animated.View style={[styles.face, styles.verso, { transform: [{ rotateY: rotacaoVerso }] }]}>
         <Text style={styles.interrogacao}>?</Text>
       </Animated.View>
-      {/* frente (imagem) */}
       <Animated.View
         style={[styles.face, acertada && styles.acertada, { transform: [{ rotateY: rotacaoFrente }] }]}
       >
